@@ -20,14 +20,24 @@ Subreddit = "*"
 PhotoLink = "*"
 Username = "*"
 Password = "*"
+flair = "*"
+IncludesFlair = ["*"]
 
-# Go to Login page
+def slow_typing(element, text): 
+   for character in text: 
+      element.send_keys(character)
+      time.sleep(uniform(0.15, 0.4))
+
+# Go to Reddit's Login page
 driver.get("https://www.reddit.com/login/")
 
-time.sleep(uniform(8, 10))
+time.sleep(uniform(5, 8))
 
 # Type Username
 User = driver.find_element_by_xpath("//*[@id='loginUsername']")
+
+# User.send_keys(Keys.CONTROL+Keys.PAGE_DOWN)
+    
 slow_typing(User, Username)
 
 time.sleep(uniform(1.5, 3))
@@ -41,53 +51,95 @@ time.sleep(uniform(0.5, 1.5))
 # Enter and Sign in
 User.send_keys(Keys.ENTER)
 
-time.sleep(uniform(8, 13))
+time.sleep(uniform(2, 5))
 
-# Go to the subreddit
-driver.get(Subreddit)
+for subreddit in subreddits:
 
-time.sleep(uniform(5, 9))
+    # Go to the subreddit
+    driver.get(subreddit)
 
-# Add a new post
-NewPost=driver.find_element_by_xpath('//*[@id="SHORTCUT_FOCUSABLE_DIV"]/div[2]/div/div/div/div[2]/div[3]/div[1]/div[1]/input')
-NewPost.click()
+    time.sleep(uniform(5, 9))
 
-time.sleep(uniform(4, 6))
+    # Add a new post
+    NewPost=driver.find_element_by_xpath('//*[@id="SHORTCUT_FOCUSABLE_DIV"]/div[2]/div/div/div/div[2]/div[3]/div[1]/div[1]/input')
+    NewPost.click()
 
-# Go to link tab
-ToLink = driver.find_element_by_xpath('//*[@id="SHORTCUT_FOCUSABLE_DIV"]/div[2]/div/div/div/div[2]/div[3]/div[1]/div[2]/div[3]/div[1]/div/button[3]')
-ToLink.click()
+    time.sleep(uniform(4, 6))
 
-time.sleep(uniform(1.5, 3))
+    # Go to link tab
+    ToLink = driver.find_element_by_xpath('//*[@id="SHORTCUT_FOCUSABLE_DIV"]/div[2]/div/div/div/div[2]/div[3]/div[1]/div[2]/div[3]/div[1]/div/button[3]')
+    ToLink.click()
 
-#Click on Title
-Title = driver.find_element_by_xpath('//*[@id="SHORTCUT_FOCUSABLE_DIV"]/div[2]/div/div/div/div[2]/div[3]/div[1]/div[2]/div[3]/div[2]/div[1]/div/textarea')
-Title.click()
+    time.sleep(uniform(1.5, 3))
 
-time.sleep(uniform(1.5, 2))
+    #Click on Title
+    Title = driver.find_element_by_xpath('//*[@id="SHORTCUT_FOCUSABLE_DIV"]/div[2]/div/div/div/div[2]/div[3]/div[1]/div[2]/div[3]/div[2]/div[1]/div/textarea')
+    Title.click()
 
-#Type the Title
-slow_typing(Title,SelectedTitle)
+    time.sleep(uniform(1.5, 2))
 
-time.sleep(uniform(1.5, 2))
+    #Type the Title
+    slow_typing(Title,SelectedTitle)
 
-#Click on url
-url = driver.find_element_by_xpath('//*[@id="SHORTCUT_FOCUSABLE_DIV"]/div[2]/div/div/div/div[2]/div[3]/div[1]/div[2]/div[3]/div[2]/div[2]/textarea')
-url.click()
+    time.sleep(uniform(1.5, 2))
 
-time.sleep(uniform(1, 2))
+    #Click on url
+    url = driver.find_element_by_xpath('//*[@id="SHORTCUT_FOCUSABLE_DIV"]/div[2]/div/div/div/div[2]/div[3]/div[1]/div[2]/div[3]/div[2]/div[2]/textarea')
+    url.click()
 
-#Type the link
-slow_typing(url,PhotoLink)
+    time.sleep(uniform(1, 2))
 
-time.sleep(uniform(1.5, 2.5))
+    #Type the link
+    slow_typing(url,PhotoLink)
 
-#Click on NS
-ns = driver.find_element_by_xpath('//*[@id="SHORTCUT_FOCUSABLE_DIV"]/div[2]/div/div/div/div[2]/div[3]/div[1]/div[2]/div[3]/div[3]/div[1]/div/button[3]')
-ns.click()
+    time.sleep(uniform(1.5, 2.5))
 
-time.sleep(uniform(1.5, 2.5))
+    #Click on NS
+    ns = driver.find_element_by_xpath('//*[@id="SHORTCUT_FOCUSABLE_DIV"]/div[2]/div/div/div/div[2]/div[3]/div[1]/div[2]/div[3]/div[3]/div[1]/div/button[3]')
+    ns.click()
 
-#Click on OC
-oc = driver.find_element_by_xpath('//*[@id="SHORTCUT_FOCUSABLE_DIV"]/div[2]/div/div/div/div[2]/div[3]/div[1]/div[2]/div[3]/div[3]/div[1]/div/button[1]/div')
-oc.click()
+    time.sleep(uniform(1.5, 2.5))
+
+    #Click on OC
+    oc = driver.find_element_by_xpath('//*[@id="SHORTCUT_FOCUSABLE_DIV"]/div[2]/div/div/div/div[2]/div[3]/div[1]/div[2]/div[3]/div[3]/div[1]/div/button[1]/div')
+    oc.click()
+
+    time.sleep(uniform(1, 2.5))
+
+
+    # Check if the sub has flairs
+    if subreddit in IncludesFlair :
+
+        # Add flair
+        Addflair = driver.find_element_by_xpath('//*[@id="SHORTCUT_FOCUSABLE_DIV"]/div[2]/div/div/div/div[2]/div[3]/div[1]/div[2]/div[3]/div[3]/div[1]/div[1]/button[4]')
+        Addflair.click()
+
+        time.sleep(uniform(2, 4))
+
+        searchFlair = driver.find_element_by_xpath('//*[@id="SHORTCUT_FOCUSABLE_DIV"]/div[4]/div/div/div/div[2]/div/div[1]/input')
+        searchFlair.click()
+
+        time.sleep(uniform(1, 2))
+
+        slow_typing(searchFlair, flair)
+
+        time.sleep(uniform(1, 2))
+
+        searchFlair.send_keys(Keys.TAB)
+        time.sleep(uniform(0.3, 0.6))
+
+        selectFlair = driver.find_element_by_xpath('//*[@id="SHORTCUT_FOCUSABLE_DIV"]/div[4]/div/div/div/div[2]/div/div[2]/div')
+        selectFlair.send_keys(Keys.ENTER)
+
+        time.sleep(uniform(1, 2))
+
+        applyFlair = driver.find_element_by_xpath('//*[@id="SHORTCUT_FOCUSABLE_DIV"]/div[4]/div/div/div/div[3]/button[1]')
+        applyFlair.click()
+
+        time.sleep(uniform(2, 4))
+
+    # Send the post
+    save = driver.find_element_by_xpath('//*[@id="SHORTCUT_FOCUSABLE_DIV"]/div[2]/div/div/div/div[2]/div[3]/div[1]/div[2]/div[3]/div[3]/div[2]/div/div[2]/button')
+    save.click()
+
+    time.sleep(uniform(4, 7)) 
