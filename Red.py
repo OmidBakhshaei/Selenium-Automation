@@ -13,7 +13,7 @@ driver = webdriver.Chrome(PATH)
 def slow_typing(element, text): 
    for character in text: 
       element.send_keys(character)
-      time.sleep(uniform(0.15, 0.4))
+      time.sleep(uniform(0.15, 0.35))
 
 SelectedTitle = "*"
 Subreddit = "*"
