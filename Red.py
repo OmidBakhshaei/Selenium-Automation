@@ -32,13 +32,17 @@ def make_subs_list(*categories):
             if sub not in subreddits_list:
                 subreddits_list.append(sub)
 
-def slow_typing(element, text): 
-   for character in text: 
-      element.send_keys(character)
-      time.sleep(uniform(0.15, 0.4))
 
+def pin_posts():
+    driver.get("https://www.reddit.com/posts/")
+    time.sleep(uniform(4, 7))
+    for i in range (0, 4):
+        driver.find_elements_by_css_selector('._2pFdCpgBihIaYh9DSMWBIu')[i].click()
+        time.sleep(uniform(1, 2.5))
+        driver.find_element_by_xpath("//*[contains(text(), 'Pin Post to Profile')]").click()
+        time.sleep(uniform(2, 5))
       
-def DeletePosts(number):
+def delete_posts(number):
 
     while True :
         ToLink = driver.find_elements_by_css_selector('._2pFdCpgBihIaYh9DSMWBIu')[number]
