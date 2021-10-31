@@ -23,6 +23,15 @@ Password = "*"
 flair = "*"
 IncludesFlair = ["*"]
 
+subreddits_list = []
+
+def make_subs_list(*categories):
+    # pa dast small
+    for category in categories:
+        for sub in category:
+            if sub not in subreddits_list:
+                subreddits_list.append(sub)
+
 def slow_typing(element, text): 
    for character in text: 
       element.send_keys(character)
