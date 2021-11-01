@@ -133,3 +133,10 @@ def post_in_all_subs(title, image_url, subreddits_list):
             post = driver.find_element_by_xpath('//*[@id="SHORTCUT_FOCUSABLE_DIV"]/div[2]/div/div/div/div[2]/div[3]/div[1]/div[2]/div['+ div_number +']/div[3]/div[2]/div/div[1]/button')
             post.click()
             time.sleep(uniform(6, 12))
+
+            
+login(username, password)
+unpin_posts()
+post_the_firsts(four_titles, four_urls, four_subreddits)
+pin_posts()
+post_in_all_subs(title, image_url, subreddits_list)
