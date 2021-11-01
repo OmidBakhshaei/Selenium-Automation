@@ -122,7 +122,7 @@ def post_in_all_subs(title, image_url, subreddits_list):
             url_form.click()
             time.sleep(uniform(1, 2))
             # Paste the link
-            url_form.send_keys(image_url)
+            url_form.send_keys(url)
             # slow_typing(url_form, image_url)
             time.sleep(uniform(1.2, 2.2))
             # Check if the sub has flairs
@@ -139,4 +139,4 @@ login(username, password)
 unpin_posts()
 post_the_firsts(four_titles, four_urls, four_subreddits)
 pin_posts()
-post_in_all_subs(title, image_url, subreddits_list)
+post_in_all_subs(title, url, subreddits_list)
