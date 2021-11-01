@@ -85,93 +85,51 @@ User.send_keys(Keys.ENTER)
 
 time.sleep(uniform(2, 5))
 
-for subreddit in subreddits:
 
-    # Go to the subreddit
-    driver.get(subreddit)
-
-    time.sleep(uniform(5, 9))
-
-    # Add a new post
-    NewPost=driver.find_element_by_xpath('//*[@id="SHORTCUT_FOCUSABLE_DIV"]/div[2]/div/div/div/div[2]/div[3]/div[1]/div[1]/input')
-    NewPost.click()
-
-    time.sleep(uniform(4, 6))
-
-    # Go to link tab
-    ToLink = driver.find_element_by_xpath('//*[@id="SHORTCUT_FOCUSABLE_DIV"]/div[2]/div/div/div/div[2]/div[3]/div[1]/div[2]/div[3]/div[1]/div/button[3]')
-    ToLink.click()
-
-    time.sleep(uniform(1.5, 3))
-
-    #Click on Title
-    Title = driver.find_element_by_xpath('//*[@id="SHORTCUT_FOCUSABLE_DIV"]/div[2]/div/div/div/div[2]/div[3]/div[1]/div[2]/div[3]/div[2]/div[1]/div/textarea')
-    Title.click()
-
-    time.sleep(uniform(1.5, 2))
-
-    #Type the Title
-    slow_typing(Title,SelectedTitle)
-
-    time.sleep(uniform(1.5, 2))
-
-    #Click on url
-    url = driver.find_element_by_xpath('//*[@id="SHORTCUT_FOCUSABLE_DIV"]/div[2]/div/div/div/div[2]/div[3]/div[1]/div[2]/div[3]/div[2]/div[2]/textarea')
-    url.click()
-
-    time.sleep(uniform(1, 2))
-
-    #Type the link
-    slow_typing(url,PhotoLink)
-
-    time.sleep(uniform(1.5, 2.5))
-
-    #Click on NS
-    ns = driver.find_element_by_xpath('//*[@id="SHORTCUT_FOCUSABLE_DIV"]/div[2]/div/div/div/div[2]/div[3]/div[1]/div[2]/div[3]/div[3]/div[1]/div/button[3]')
-    ns.click()
-
-    time.sleep(uniform(1.5, 2.5))
-
-    #Click on OC
-    oc = driver.find_element_by_xpath('//*[@id="SHORTCUT_FOCUSABLE_DIV"]/div[2]/div/div/div/div[2]/div[3]/div[1]/div[2]/div[3]/div[3]/div[1]/div/button[1]/div')
-    oc.click()
-
-    time.sleep(uniform(1, 2.5))
-
-
-    # Check if the sub has flairs
-    if subreddit in IncludesFlair :
-
-        # Add flair
-        Addflair = driver.find_element_by_xpath('//*[@id="SHORTCUT_FOCUSABLE_DIV"]/div[2]/div/div/div/div[2]/div[3]/div[1]/div[2]/div[3]/div[3]/div[1]/div[1]/button[4]')
-        Addflair.click()
-
-        time.sleep(uniform(2, 4))
-
-        searchFlair = driver.find_element_by_xpath('//*[@id="SHORTCUT_FOCUSABLE_DIV"]/div[4]/div/div/div/div[2]/div/div[1]/input')
-        searchFlair.click()
-
-        time.sleep(uniform(1, 2))
-
-        slow_typing(searchFlair, flair)
-
-        time.sleep(uniform(1, 2))
-
-        searchFlair.send_keys(Keys.TAB)
-        time.sleep(uniform(0.3, 0.6))
-
-        selectFlair = driver.find_element_by_xpath('//*[@id="SHORTCUT_FOCUSABLE_DIV"]/div[4]/div/div/div/div[2]/div/div[2]/div')
-        selectFlair.send_keys(Keys.ENTER)
-
-        time.sleep(uniform(1, 2))
-
-        applyFlair = driver.find_element_by_xpath('//*[@id="SHORTCUT_FOCUSABLE_DIV"]/div[4]/div/div/div/div[3]/button[1]')
-        applyFlair.click()
-
-        time.sleep(uniform(2, 4))
-
-    # Send the post
-    save = driver.find_element_by_xpath('//*[@id="SHORTCUT_FOCUSABLE_DIV"]/div[2]/div/div/div/div[2]/div[3]/div[1]/div[2]/div[3]/div[3]/div[2]/div/div[2]/button')
-    save.click()
-
-    time.sleep(uniform(4, 7)) 
+def post_in_all_subs(title, image_url, subreddits_list):
+    for subreddit in subreddits_list:
+        if subreddit not in four_subreddits:   
+            if subreddit in div4:
+                div_number = "4"
+            else:
+                div_number = "3"
+            # Go to the subreddit
+            driver.get(subreddit+"submit")
+            # driver.get(subreddit)
+            time.sleep(uniform(6, 10))
+            # Go to link tab
+            link_tab = driver.find_element_by_xpath('//*[@id="SHORTCUT_FOCUSABLE_DIV"]/div[2]/div/div/div/div[2]/div[3]/div[1]/div[2]/div['+ div_number +']/div[1]/div/button[3]')
+            # link_tab = wait(driver, 10).until(EC.element_to_be_clickable((By.CLASS_NAME, ('Z1w8VkpQ23E1Wdq_My3U4 ')[1])))
+            # link_tab = driver.find_elements_by_class_name('Z1w8VkpQ23E1Wdq_My3U4 ')[2]
+            link_tab.click()
+            time.sleep(uniform(1.2, 2))
+            # Click on Title
+            title_form = driver.find_element_by_xpath('//*[@id="SHORTCUT_FOCUSABLE_DIV"]/div[2]/div/div/div/div[2]/div[3]/div[1]/div[2]/div['+ div_number +']/div[2]/div[1]/div/textarea')
+            title_form.click()
+            time.sleep(uniform(1.5, 2))
+            # Check if the title needs OC
+            if subreddit in subs_to_add_oc:
+                title_form.send_keys(title+" (OC)")
+                # slow_typing(title_form, title+" (OC)")
+            elif subreddit in specific_titles:
+                slow_typing(title_form, specific_titles[subreddit])
+            else:
+                # slow_typing(title_form,title)
+                title_form.send_keys(title)
+            time.sleep(uniform(1.5, 2))
+            # Click on url
+            url_form = driver.find_element_by_xpath('//*[@id="SHORTCUT_FOCUSABLE_DIV"]/div[2]/div/div/div/div[2]/div[3]/div[1]/div[2]/div['+ div_number +']/div[2]/div[2]/textarea')
+            url_form.click()
+            time.sleep(uniform(1, 2))
+            # Paste the link
+            url_form.send_keys(image_url)
+            # slow_typing(url_form, image_url)
+            time.sleep(uniform(1.2, 2.2))
+            # Check if the sub has flairs
+            if subreddit in flair_dictionary:
+                # Add flair
+                add_flair(subreddit, flair_dictionary[subreddit])
+            # Post
+            post = driver.find_element_by_xpath('//*[@id="SHORTCUT_FOCUSABLE_DIV"]/div[2]/div/div/div/div[2]/div[3]/div[1]/div[2]/div['+ div_number +']/div[3]/div[2]/div/div[1]/button')
+            post.click()
+            time.sleep(uniform(6, 12))
