@@ -45,20 +45,19 @@ def pin_posts():
 def delete_posts(number):
 
     while True :
-        ToLink = driver.find_elements_by_css_selector('._2pFdCpgBihIaYh9DSMWBIu')[number]
-        ToLink.click()
+        driver.find_elements_by_css_selector('._2pFdCpgBihIaYh9DSMWBIu')[number].click()
         time.sleep(uniform(1.5, 3))
         wait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//span[text()='delete']"))).click()
         time.sleep(uniform(1.5, 3))
-        DeletePost = driver.find_element_by_xpath('//*[@id="SHORTCUT_FOCUSABLE_DIV"]/div[4]/div/div/section/footer/button[2]')
-        DeletePost.send_keys(Keys.TAB)
+        deletePost = driver.find_element_by_xpath('//*[@id="SHORTCUT_FOCUSABLE_DIV"]/div[4]/div/div/section/footer/button[2]')
+        deletePost.send_keys(Keys.TAB)
         time.sleep(uniform(0.2, 0.6))
-        DeletePost.send_keys(Keys.TAB)
+        deletePost.send_keys(Keys.TAB)
         time.sleep(uniform(0.2, 0.6))
-        DeletePost.send_keys(Keys.TAB)
+        deletePost.send_keys(Keys.TAB)
         time.sleep(uniform(0.2, 0.6))
-        DeletePost.send_keys(Keys.ENTER)
-        time.sleep(uniform(2, 4))      
+        deletePost.send_keys(Keys.ENTER)
+        time.sleep(uniform(3.5, 8))    
       
 # Go to Reddit's Login page
 driver.get("https://www.reddit.com/login/")
