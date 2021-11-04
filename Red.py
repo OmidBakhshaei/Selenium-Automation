@@ -59,32 +59,25 @@ def delete_posts(number):
         deletePost.send_keys(Keys.ENTER)
         time.sleep(uniform(3.5, 8))    
       
-# Go to Reddit's Login page
-driver.get("https://www.reddit.com/login/")
-
-time.sleep(uniform(5, 8))
-
-# Type Username
-User = driver.find_element_by_xpath("//*[@id='loginUsername']")
-
-# User.send_keys(Keys.CONTROL+Keys.PAGE_DOWN)
-    
-slow_typing(User, Username)
-
-time.sleep(uniform(1.5, 3))
-
-# Type Password
-Pass = driver.find_element_by_xpath('//*[@id="loginPassword"]')
-slow_typing(Pass, Password)
-
-time.sleep(uniform(0.5, 1.5))
-
-# Enter and Sign in
-User.send_keys(Keys.ENTER)
-
-time.sleep(uniform(2, 5))
 
 
+def login(username, password):
+    # Go to Reddit's Login page
+    driver.get("https://www.reddit.com/login/")
+    time.sleep(uniform(5, 8))
+    # Type Username
+    username_form = driver.find_element_by_xpath("//*[@id='loginUsername']")
+    slow_typing(username_form, username)
+    time.sleep(uniform(1.5, 3))
+    # Type Password
+    password_form = driver.find_element_by_xpath('//*[@id="loginPassword"]')
+    slow_typing(password_form, password)
+    time.sleep(uniform(0.5, 1.5))
+    # Enter and Sign in
+    password_form.send_keys(Keys.ENTER)
+    time.sleep(uniform(4, 7))
+
+   
 def post_in_all_subs(title, image_url, subreddits_list):
     for subreddit in subreddits_list:
         if subreddit not in four_subreddits:   
