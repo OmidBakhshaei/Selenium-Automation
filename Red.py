@@ -10,7 +10,7 @@ from selenium.webdriver.support.ui import WebDriverWait as wait
 PATH = "C:\chromedriver.exe"
 
 driver = webdriver.Chrome(PATH)
-
+driver.minimize_window()
 # User.send_keys(Keys.CONTROL+Keys.PAGE_DOWN)
 
 def slow_typing(element, text): 
